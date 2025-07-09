@@ -1,11 +1,7 @@
-import { Button } from "./components/ui/button";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  return (
-    <>
-      <Button>click</Button>
-    </>
-  );
+  return <Outlet />;
 }
 
 export default App;
