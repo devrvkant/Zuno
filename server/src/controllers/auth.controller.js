@@ -1,5 +1,6 @@
 export const signUp = async (req, res) => {
   // Handle user signup
+  res.send("User signed up successfully");
 };
 
 export const logIn = async (req, res) => {
