@@ -1,5 +1,7 @@
 import { Router } from "express";
 
+import { signUp, logIn, logOut, verifyEmail, forgotPassword, resetPassword } from "../controllers/auth.controller.js";
+
 const authRouter = Router();
 
 // signup(register) a new user
