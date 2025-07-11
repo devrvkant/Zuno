@@ -3,7 +3,6 @@ dotenv.config(); // load environment variables from .env file before doing anyth
 import express from "express";
 
 const PORT = process.env.PORT || 5500;
-
 const app = express();
 
 app.listen(PORT, () => {
