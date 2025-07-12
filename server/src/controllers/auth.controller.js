@@ -6,6 +6,27 @@ import { config } from "../config/env.js";
 import { generateVerificationToken, generateTokenAndSetCookie } from "../utils/authUtils.js";
 import { sendPasswordResetEmail, sendSuccessEmailForPasswordReset, sendVerificationEmail, sendWelcomeEmail } from "../services/resend/emails.js";
 
+export const checkAuth = async (req, res) => {
+  try {
+    // Disable browser cache for this route :- preventing the issue of browser caching the response(user is seeing the Dashboard even after logging out, while using the browser's forward button)
+    res.set({
+      "Cache-Control": "no-store, no-cache, must-revalidate, private",
+      Pragma: "no-cache",
+      Expires: "0",
+    });
+
+    // Return the user to client for representing that the user is authenticated(loggedIn)
+    const user = req.user;  // user from isAuthenticated middleware
+    res.status(200).json({ success: true, user });
+  } catch (err) {
+    console.error("Error in checkAuth : ", err.message);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error, Please try again later!",
+    });
+  }
+};
+
 export const signUp = async (req, res) => {
   try {
     const { name, email, password } = req.body;

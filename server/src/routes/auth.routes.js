@@ -1,8 +1,12 @@
 import { Router } from "express";
 
-import { signUp, logIn, logOut, verifyEmail, forgotPassword, resetPassword } from "../controllers/auth.controller.js";
+import { isAuthenticated } from "../middlewares/auth.middleware.js";
+import { signUp, logIn, logOut, verifyEmail, forgotPassword, resetPassword, checkAuth } from "../controllers/auth.controller.js";
 
 const authRouter = Router();
+
+// for getting the currently loggedIn user 
+authRouter.get("/check-auth", isAuthenticated, checkAuth);
 
 // signup(register) a new user
 authRouter.post("/signup", signUp);
