@@ -9,4 +9,5 @@ export const config = {
     resendApiKey: process.env.RESEND_API_KEY,
     senderEmail: process.env.SENDER_EMAIL,
     nodeEnv: process.env.NODE_ENV,
+    clientUrl: process.env.CLIENT_URL,
 }
