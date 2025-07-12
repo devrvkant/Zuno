@@ -118,4 +118,33 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Css for autofill consistency */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    /* Ensure the autofill background color matches your theme */
+    -webkit-box-shadow: 0 0 0px 1000px var(--card) inset !important;
+    /* Set the text color to your foreground color */
+    -webkit-text-fill-color: var(--foreground) !important;
+    /* Apply your theme's border */
+    border: 1px solid var(--border) !important;
+    /* Apply your theme's border-radius */
+    border-radius: var(--radius) !important;
+    /* Potentially needed for transparent backgrounds or specific color issues */
+    -webkit-background-clip: text !important;
+    caret-color: var(--foreground) !important;
+  }
+  /* For Firefox and other browsers that support the standard :autofill pseudo-class */
+  input:autofill,
+  input:autofill:hover,
+  input:autofill:focus,
+  input:autofill:active {
+    background-color: var(--card) !important;
+    color: var(--foreground) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius) !important;
+    caret-color: var(--foreground) !important;
+  }
 }
