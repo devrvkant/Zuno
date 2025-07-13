@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import App from "../App";
-import Dashboard from "../pages/Dashboard";
 import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import EmailVerification from "../pages/EmailVerification";
@@ -9,22 +8,23 @@ import ResetPassword from "../pages/ResetPassword";
 import ForgotPassword from "../pages/ForgotPassword";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import PublicRoute from "../components/auth/PublicRoute";
+import Landing from "../pages/Landing";
+import DashboardLayout from "../components/layout/DashboardLayout";
+import Dashboard from "../pages/Dashboard";
+import NotFound from "../pages/NotFound";
 
 const appRoutes = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <App />, // Not check auth here
     children: [
-      // Protected Routes :- Requires user to be loggedIn
+      // Public Routes :- load immediately(other routes like pricing and about also goes here)
       {
         index: true,
-        element: (
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        ),
+        element: <Landing />,
       },
-      // Public Routes :- Accessible without login
+
+      // Public Auth Routes :- only check if user is authenticated
       {
         path: "signup",
         element: (
@@ -61,6 +61,45 @@ const appRoutes = createBrowserRouter([
       {
         path: "verify-email",
         element: <EmailVerification />,
+      },
+
+      // Protected Routes(Dashboard & nested routes to /dashboard) :- auth check only happens here
+      // Still nested under App but with different layout and auth checking
+      {
+        path: "dashboard",
+        element: (
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        ),
+        children: [
+          {
+            index: true,
+            element: <Dashboard />, // Dashboard home page
+          },
+          // Add more protected routes here as needed
+          // {
+          //   path: "profile",
+          //   element: <Profile />,
+          // },
+          // {
+          //   path: "settings",
+          //   element: <Settings />,
+          // },
+          // {
+          //   path: "chat",
+          //   element: <Chat />,
+          // },
+          // {
+          //   path: "chat/:chatId",
+          //   element: <Chat />,
+          // },
+        ],
+      },
+      // Catch-all route for 404 Not Found
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
