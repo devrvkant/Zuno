@@ -1,9 +1,7 @@
-import React from 'react'
+import UserInfo from "../components/dashboard/UserInfo";
 
 const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+  return <UserInfo />;
+};
 
-export default Dashboard
+export default Dashboard;
