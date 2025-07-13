@@ -1,4 +1,5 @@
 import { User, CheckCircle, XCircle } from "lucide-react";
+import {toast} from "sonner";
 
 export default function UserInfo() {
   // Mock data for UI testing
@@ -59,7 +60,10 @@ export default function UserInfo() {
               <button
                 onClick={() => {
                   // Add your logout logic here
-                  console.log("Logout clicked");
+                  toast("Logged out successfully!", {
+                    icon: "👋",
+                    duration: 3000,
+                  });
                 }}
                 className="w-full bg-destructive hover:bg-destructive/90 text-destructive-foreground font-medium py-3 px-6 rounded-lg transition-colors duration-200"
               >

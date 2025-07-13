@@ -24,7 +24,10 @@ import { emailVerificationSchema } from "../../schemas/auth.schema.js";
 
 const formSchema = emailVerificationSchema;
 
-export default function EmailVerificationForm({handleVerifyEmail, isLoading}) {
+export default function EmailVerificationForm({
+  handleVerifyEmail,
+  isLoading,
+}) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -90,14 +93,14 @@ export default function EmailVerificationForm({handleVerifyEmail, isLoading}) {
   const isCodeComplete = watchedCode.every((digit) => digit !== "");
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 px-4 py-8">
+    <div className="min-h-screen flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
-        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+        <Card className="shadow-xl border-0 bg-card/80 backdrop-blur-sm">
           <CardHeader className="text-center pb-6 sm:pb-8">
-            <CardTitle className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <CardTitle className="text-3xl font-bold text-foreground">
               Verify Your Email
             </CardTitle>
-            <CardDescription className="text-slate-600 mt-2 text-sm sm:text-base">
+            <CardDescription className="mt-2 text-sm sm:text-base text-muted-foreground">
               Enter the 6-digit code sent to your email address
             </CardDescription>
           </CardHeader>
@@ -114,13 +117,14 @@ export default function EmailVerificationForm({handleVerifyEmail, isLoading}) {
                     name="code"
                     render={() => (
                       <FormItem>
-                        <FormLabel className="text-slate-700 font-medium text-center block">
+                        <FormLabel className="font-medium text-center block text-muted-foreground">
                           Verification Code
                         </FormLabel>
                         <FormControl>
                           <div className="flex justify-center flex-wrap gap-2 sm:gap-3 mt-4">
                             {watchedCode.map((digit, index) => (
                               <input
+                                id={`code-input-${index}`}
                                 key={index}
                                 ref={(el) => (inputRefs.current[index] = el)}
                                 type="text"
@@ -132,14 +136,14 @@ export default function EmailVerificationForm({handleVerifyEmail, isLoading}) {
                                 }
                                 onKeyDown={(e) => handleKeyDown(index, e)}
                                 onPaste={handlePaste}
-                                className="w-10 h-10 sm:w-12 sm:h-12 text-center text-base sm:text-lg font-semibold border-2 border-slate-200 rounded-lg focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:outline-none transition-all duration-200 bg-white"
                                 autoComplete="off"
+                                className="w-10 h-10 sm:w-12 sm:h-12 text-center text-base sm:text-lg font-semibold border border-input rounded-lg focus:ring-2 focus:ring-ring focus:outline-none transition-all duration-200 text-foreground"
                               />
                             ))}
                           </div>
                         </FormControl>
                         <div className="min-h-[20px] text-center">
-                          <FormMessage className="text-red-500 text-sm" />
+                          <FormMessage className="text-destructive text-sm" />
                         </div>
                       </FormItem>
                     )}
@@ -148,7 +152,7 @@ export default function EmailVerificationForm({handleVerifyEmail, isLoading}) {
                   <Button
                     type="submit"
                     disabled={!isCodeComplete || isLoading}
-                    className="w-full h-11 sm:h-12 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02] disabled:hover:scale-100 text-sm sm:text-base"
+                    className="w-full h-11 sm:h-12 bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02] disabled:hover:scale-100 text-sm sm:text-base"
                   >
                     {isLoading ? (
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
