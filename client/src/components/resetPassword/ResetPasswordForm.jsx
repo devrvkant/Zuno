@@ -27,7 +27,7 @@ const ResetPasswordForm = ({ handleResetPassword, isLoading }) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       password: "",
-      confirmPassword: "",
+    confirmPassword: "",
     },
   });
 

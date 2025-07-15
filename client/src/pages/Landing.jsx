@@ -4,16 +4,21 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const Landing = () => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
- // Redirect to dashboard if user is authenticated(preventing the user to going back to landing page by using browser back button)
- useEffect(() => {
+  // Redirect to dashboard if user is authenticated(preventing the user to going back to landing page by using browser back button)
+  useEffect(() => {
     if (isAuthenticated) {
-      navigate('/dashboard', { replace: true });
+      navigate("/dashboard", { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
@@ -24,10 +29,11 @@ const Landing = () => {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-foreground">Zuno</h1>
           <div className="space-x-4">
-            <Link to="/login">
+            {/* sending directly to dashboard for authenticated users */}
+            <Link to="/dashboard">
               <Button variant="ghost">Login</Button>
             </Link>
-            <Link to="/signup">
+            <Link to="/dashboard">
               <Button>Get Started</Button>
             </Link>
           </div>
@@ -44,12 +50,12 @@ const Landing = () => {
             Connect, chat, and collaborate in real-time with your team.
           </p>
           <div className="space-x-4">
-            <Link to="/signup">
+            <Link to="/dashboard">
               <Button size="lg" className="px-8 py-3">
                 Start Chatting Now
               </Button>
             </Link>
-            <Link to="/login">
+            <Link to="/dashboard">
               <Button variant="outline" size="lg" className="px-8 py-3">
                 Login
               </Button>
