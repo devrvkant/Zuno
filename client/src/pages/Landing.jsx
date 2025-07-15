@@ -1,8 +1,22 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Landing = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+ // Redirect to dashboard if user is authenticated(preventing the user to going back to landing page by using browser back button)
+ useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}

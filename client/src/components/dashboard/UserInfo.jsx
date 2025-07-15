@@ -1,12 +1,19 @@
 import { User, CheckCircle, XCircle } from "lucide-react";
-import {toast} from "sonner";
+import { useSelector } from "react-redux";
+
+import { useLogOutMutation } from "../../features/auth/authApi";
 
 export default function UserInfo() {
-  // Mock data for UI testing
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    isAuthenticated: true
+  const user = useSelector((state) => state.auth.user);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [logOut, { isLoading }] = useLogOutMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logOut().unwrap();
+    } catch (err) {
+      console.error("Logout error : ", err);
+    }
   };
 
   return (
@@ -31,14 +38,12 @@ export default function UserInfo() {
 
             {/* User Email */}
             <div>
-              <p className="text-muted-foreground">
-                {user.email}
-              </p>
+              <p className="text-muted-foreground">{user.email}</p>
             </div>
 
             {/* Authentication Status */}
             <div className="flex items-center justify-center gap-2 pt-4">
-              {user.isAuthenticated ? (
+              {isAuthenticated ? (
                 <>
                   <CheckCircle className="w-5 h-5 text-chart-2" />
                   <span className="text-chart-2 font-medium">
@@ -58,16 +63,11 @@ export default function UserInfo() {
             {/* Logout Button */}
             <div className="pt-6">
               <button
-                onClick={() => {
-                  // Add your logout logic here
-                  toast("Logged out successfully!", {
-                    icon: "👋",
-                    duration: 3000,
-                  });
-                }}
+                disabled={isLoading}
+                onClick={handleLogout}
                 className="w-full bg-destructive hover:bg-destructive/90 text-destructive-foreground font-medium py-3 px-6 rounded-lg transition-colors duration-200"
               >
-                Logout
+                {isLoading ? "Logging out..." : "Logout"}
               </button>
             </div>
           </div>
