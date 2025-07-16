@@ -22,6 +22,8 @@ const Landing = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  if(isAuthenticated) return null; // Prevent rendering the landing page if user is authenticated
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
