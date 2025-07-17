@@ -7,6 +7,8 @@ import { config } from "./config/env.js";
 import connectToMongoDB from "./lib/mongoDB.js";
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
+import chatRouter from "./routes/chat.routes.js";
+import messageRouter from "./routes/message.routes.js";
 
 const PORT = config.port || 5500;
 const app = express();
@@ -28,6 +30,8 @@ app.use(cookieParser());   // allow us to parse incoming cookies
 // using routes
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/chats", chatRouter);
+app.use("/api/messages", messageRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT : ${PORT}`);
