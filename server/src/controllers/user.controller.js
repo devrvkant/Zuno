@@ -1,4 +1,26 @@
+import User from "../models/user.model.js";
 import cloudinary from "../services/cloudinary/cloudinary.config.js";
+
+export const getUsers = async (req, res) => {
+  try {
+    const loggedInUserId = req.user._id; // from isAuthenticated middleware
+
+    // get all users except the loggedIn user
+    const users = await User.find({ _id: { $ne: loggedInUserId } });
+
+    res.status(200).json({
+      success: true,
+      message: "Users fetched successfully.",
+      users
+    });
+  } catch (err) {
+    console.error("Error in fetching users : ", err.message);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error, Please try again later!",
+    });
+  }
+};
 
 export const uploadProfilePicture = async (req, res) => {
   try {
