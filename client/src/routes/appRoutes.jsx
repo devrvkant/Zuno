@@ -9,9 +9,10 @@ import ForgotPassword from "../pages/ForgotPassword";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import PublicRoute from "../components/auth/PublicRoute";
 import Landing from "../pages/Landing";
-import DashboardLayout from "../components/layout/DashboardLayout";
+import DashboardLayout from "../components/layouts/DashboardLayout";
 import Dashboard from "../pages/Dashboard";
 import NotFound from "../pages/NotFound";
+import Profile from "../pages/Profile";
 
 const appRoutes = createBrowserRouter([
   {
@@ -78,10 +79,10 @@ const appRoutes = createBrowserRouter([
             element: <Dashboard />, // Dashboard home page
           },
           // Add more protected routes here as needed
-          // {
-          //   path: "profile",
-          //   element: <Profile />,
-          // },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
           // {
           //   path: "settings",
           //   element: <Settings />,

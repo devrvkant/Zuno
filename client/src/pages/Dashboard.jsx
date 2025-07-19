@@ -1,7 +1,13 @@
+import Header from "../components/dashboard/Header";
 import UserInfo from "../components/dashboard/UserInfo";
 
 const Dashboard = () => {
-  return <UserInfo />;
+  return (
+    <div className="min-h-screen">
+      <Header />
+      <UserInfo />
+    </div>
+  );
 };
 
 export default Dashboard;
