@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { config } from "../../config/env.js";
 import { setUser } from "../auth/authSlice";
+import { setUsers } from "../chat/chatSlice.js";
 
 // Define the apiSlice
 export const userApi = createApi({
@@ -11,6 +12,18 @@ export const userApi = createApi({
     credentials: "include", // Include cookies if your backend uses them
   }),
   endpoints: (builder) => ({
+    getUsers: builder.query({
+      query: () => "/", // GET /api/users
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled;
+          console.log("Fetched users:", data);
+          dispatch(setUsers(data.users));
+        } catch (err) {
+          console.error("Failed to fetch users:", err);
+        }
+      },
+    }),
     uploadProfilePic: builder.mutation({
       query: (formData) => ({
         url: "/profile-pic", // POST /api/auth/profile-pic
