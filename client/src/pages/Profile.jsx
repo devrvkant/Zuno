@@ -8,6 +8,7 @@ import {
   Shield,
   CheckCircle,
   Camera,
+  Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -19,7 +20,6 @@ const Profile = () => {
   const [uploadProfilePicture, { isLoading: isUploading }] =
     useUploadProfilePicMutation();
   const user = useSelector((state) => state.auth.user);
-  const profilePicURL = useSelector((state) => state.user?.profilePic.url);
 
   // Handle file upload when files are added
   const handleFilesAdded = async (addedFiles) => {
@@ -62,12 +62,6 @@ const Profile = () => {
     onFilesAdded: handleFilesAdded, // This triggers upload when file is selected
   });
 
-  const handleAvatarUpload = () => {
-    // Handle file upload logic here
-    console.log("Upload avatar clicked");
-    // You can add file input or modal logic here
-  };
-
   const previewUrl = files[0]?.preview || null;
 
   // Show file validation errors
@@ -106,9 +100,28 @@ const Profile = () => {
             <div className="flex flex-col items-center space-y-4">
               <div className="relative group">
                 <div className="w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-full bg-muted flex items-center justify-center ring-4 ring-primary/20 shadow-lg overflow-hidden transition-all duration-300 group-hover:ring-primary/40 group-hover:shadow-xl">
-                  {profilePicURL ? (
+                  {/* Show preview image during upload, then uploaded image, then default avatar */}
+                  {previewUrl ? (
+                    <div className="relative w-full h-full">
+                      <img
+                        src={previewUrl}
+                        alt="Preview"
+                        className={`w-full h-full rounded-full object-cover transition-all duration-300 group-hover:scale-105 ${
+                          isUploading ? "opacity-60" : "opacity-100"
+                        }`}
+                      />
+                      {/* Upload overlay effect */}
+                      {isUploading && (
+                        <div className="absolute inset-0 bg-primary/20 backdrop-blur-[1px] rounded-full flex items-center justify-center">
+                          <div className="bg-background/80 rounded-full p-2 shadow-lg">
+                            <Loader2 className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 animate-spin text-primary" />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : user?.profilePic?.url ? (
                     <img
-                      src={profilePicURL}
+                      src={user.profilePic.url}
                       alt="Profile"
                       className="w-full h-full rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
@@ -124,10 +137,12 @@ const Profile = () => {
                     e.stopPropagation();
                     openFileDialog();
                   }}
-                  className="absolute bottom-0 right-0 sm:bottom-1.5 w-8 h-8 sm:w-10 sm:h-10 bg-primary hover:bg-primary/90 border-2 border-background rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:rotate-12 active:scale-95 cursor-pointer group/camera backdrop-blur-sm"
+                  className={`absolute bottom-0 right-0 sm:bottom-1.5 w-8 h-8 sm:w-10 sm:h-10 bg-primary hover:bg-primary/90 border-2 border-background rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:rotate-12 active:scale-95 cursor-pointer group/camera backdrop-blur-sm ${
+                    isUploading ? "animate-pulse" : ""
+                  }`}
                   aria-label="Upload or change profile picture"
                 >
-                  <Camera className="w-4 h-4 sm:w-5 sm:h-5 text-primary-foreground transition-all duration-300 group-hover/camera:scale-110 group-hover/camera:rotate-12" />
+                    <Camera className="w-4 h-4 sm:w-5 sm:h-5 text-primary-foreground transition-all duration-300 group-hover/camera:scale-110 group-hover/camera:rotate-12" />
                 </button>
 
                 {/* Hidden file input */}
