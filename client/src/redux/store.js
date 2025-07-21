@@ -4,6 +4,7 @@ import authReducer from "../features/auth/authSlice.js";
 import chatReducer from "../features/chat/chatSlice.js";
 import { authApi } from "../features/auth/authApi.js";
 import { userApi } from "../features/user/userApi.js";
+import { chatApi } from "../features/chat/chatApi.js";
 
 export const store = configureStore({
   reducer: {
