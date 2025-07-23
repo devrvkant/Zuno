@@ -14,11 +14,13 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => "/", // GET /api/users
+      transformResponse: (response) => {
+        return response.users;
+      },
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
           const { data } = await queryFulfilled;
-          console.log("Fetched users:", data);
-          dispatch(setUsers(data.users));
+          dispatch(setUsers(data));
         } catch (err) {
           console.error("Failed to fetch users:", err);
         }
@@ -49,4 +51,4 @@ export const userApi = createApi({
   }),
 });
 
-export const { useUploadProfilePicMutation } = userApi;
+export const { useGetUsersQuery, useUploadProfilePicMutation } = userApi;
