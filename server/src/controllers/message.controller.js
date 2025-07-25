@@ -2,24 +2,24 @@ import Message from "../models/message.model.js";
 
 export const sendMessage = async (req, res) => {
   try {
-    const { text, image } = req.body;
+    const { text } = req.body; // text message
     const { id: receiverId } = req.params;
     const senderId = req.user._id; // from isAuthenticated middleware
 
-    // If image is also in the message
+    // If image is also in the message(and uploaded via uploadMessageImageOptional middleware)
     let imageURL;
-    if (image) {
-      // then upload the image to cloudinary
-      const uploadResponse = await cloudinary.uploader.upload(image);
-      imageURL = uploadResponse.secure_url;
+    if (req.file) {
+      // then gets the image URL from the uploaded file
+      imageURL = req.file.path; // cloudinary URL
+      console.log("Image uploaded successfully:", imageURL);
     }
 
     // now create a new message in dB(image will be null if not provided)
     const newMessage = await Message.create({
       senderId,
       receiverId,
-      text,
-      image: imageURL,
+      text, // nothing if not provided
+      image: imageURL, // nothing if not provided
     });
 
     // TODO: realtime functionality goes here

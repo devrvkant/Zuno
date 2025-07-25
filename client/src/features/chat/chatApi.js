@@ -25,10 +25,10 @@ export const chatApi = createApi({
       },
     }),
     sendMessage: builder.mutation({
-      query: ({ userId, message }) => ({
+      query: ({ userId, msg }) => ({
         url: `/${userId}`, // POST /api/messages/:userId
         method: "POST",
-        body: { message },
+        body: msg, // This can be FormData or JSON based on the message type
       }),
       transformErrorResponse: (response) => {
         return response.data?.message || "Failed to send message!";
