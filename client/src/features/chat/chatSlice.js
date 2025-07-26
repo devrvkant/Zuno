@@ -4,7 +4,6 @@ const initialState = {
   users: [],
   onlineUsers: [],
   selectedUser: null,
-  messages: [],
 };
 
 export const chatSlice = createSlice({
@@ -17,12 +16,9 @@ export const chatSlice = createSlice({
     setSelectedUser: (state, action) => {
       state.selectedUser = action.payload;
     },
-    setMessages: (state, action) => {
-      state.messages = action.payload;
-      console.log("Messages set:", state.messages);
-    },
-    clearMessages: (state) => {
-      state.messages = [];
+    setOnlineUsers: (state, action) => {
+      state.onlineUsers = action.payload;
+      console.log("Online users updated in state:", state.onlineUsers);
     },
   },
 });
@@ -30,9 +26,7 @@ export const chatSlice = createSlice({
 export const {
   setUsers,
   setSelectedUser,
-  addMessage,
-  clearMessages,
-  setMessages,
+  setOnlineUsers,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

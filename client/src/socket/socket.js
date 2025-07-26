@@ -2,8 +2,8 @@ import { io } from "socket.io-client";
 import { config } from "../config/env";
 
 const socket = io(config.serverUrl, {
-  autoConnect: false, // we'll connect manually when dashboard loads/user logs in
-  withCredentials: true, // include cookies for authentication
+  autoConnect: false,
+  withCredentials: true,
 });
 
 export const connectSocket = () => {
@@ -18,3 +18,5 @@ export const disconnectSocket = () => {
     socket.disconnect();
   }
 };
+
+export default socket;
