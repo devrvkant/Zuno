@@ -8,9 +8,12 @@ const MessageBubble = ({ message, isSender }) => {
     hour12: true, // Use 12-hour format with AM/PM
   });
 
-  const hasImage = !!message.image;
+  const hasImage = !!message.image || !!message.localImageUrl;
   const hasText = !!message.text && message.text.trim() !== "";
   const isTextOnly = hasText && !hasImage;
+
+  const displayImageUrl = message.localImageUrl || message.image;
+  const downloadUrl = message.image;
 
   return (
     <div
@@ -41,14 +44,14 @@ const MessageBubble = ({ message, isSender }) => {
         {hasImage && (
           <div className="group relative p-1.5">
             <img
-              src={message.image}
+              src={displayImageUrl}
               className="rounded-lg max-w-full"
               alt="message attachment"
             />
             {/* Download button and overlay */}
             <div className="absolute inset-1.5 bg-black/40 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">
               <a
-                href={message.image}
+                href={downloadUrl}
                 download
                 target="_blank"
                 rel="noopener noreferrer"

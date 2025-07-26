@@ -26,19 +26,21 @@ const MessageInput = () => {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!selectedUser) return;
+
+    // Immediately clear the input field and remove the selected image
+    setMessage("");
+    if (selectedImage) {
+      removeFile(selectedImage.id);
+    }
     try {
       // FinalMsg with text/image or both and with trimmed text
       const finalMsg = decideMsgType(message, selectedImage); // message = text, selectedImage = image file
 
+      // send message to the server
       await sendMessage({
         userId: selectedUser._id,
         msg: finalMsg,
       }).unwrap();
-
-      setMessage("");
-      if (selectedImage) {
-        removeFile(selectedImage.id);
-      }
     } catch (err) {
       console.error("Failed to send message:", err.message);
       toast.error("Failed to send message.");
@@ -111,7 +113,7 @@ const MessageInput = () => {
           type="submit"
           size="icon"
           className="h-11 w-11 flex-shrink-0"
-          disabled={(!message.trim() && !selectedImage) || isLoading}
+          disabled={!message.trim() && !selectedImage}
         >
           <SendHorizonal className="h-5 w-5" />
         </Button>
