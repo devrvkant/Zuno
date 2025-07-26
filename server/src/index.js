@@ -19,7 +19,7 @@ app.use(
     // origin: "http://localhost:5173",   // specify the exact frontend origin
     origin: [
       "http://localhost:5173", // for local development
-      "http://192.168.1.7:5173", // for mobile testing
+      "http://192.168.1.6:5173", // for mobile testing
     ],
     credentials: true,   // allow credentials (cookies, authorization headers)
   })

@@ -166,3 +166,12 @@
     background-color: var(--sidebar-primary);
   }
 }
+
+.sender-message {
+  background-color: oklch(0.29 0.012 265);
+  color: oklch(0.985 0 0);
+}
+.receiver-message {
+  background-color: oklch(0.26 0.013 105);
+  color: oklch(0.985 0 0);
+}
