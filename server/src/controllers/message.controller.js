@@ -1,3 +1,4 @@
+import { io } from "../index.js";
 import Message from "../models/message.model.js";
 
 export const sendMessage = async (req, res) => {
@@ -22,7 +23,8 @@ export const sendMessage = async (req, res) => {
       image: imageURL, // nothing if not provided
     });
 
-    // TODO: realtime functionality goes here
+    // emit the new message to the receiver's socket room
+    if (receiverId) io.to(receiverId).emit("new_message", newMessage);
 
     res.status(201).json({
       success: true,

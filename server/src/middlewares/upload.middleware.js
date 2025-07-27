@@ -19,8 +19,10 @@ const messageImageStorage = new CloudinaryStorage({
     folder: "message_images",
     allowed_formats: ["jpg", "png", "jpeg", "gif", "webp"],
     transformation: [
-      { width: 800, height: 600, crop: "limit" }, // Resize large images
-      { quality: "auto" }, // Auto optimize quality
+      { width: 400, height: 300, crop: "limit" }, // Resize large images
+      { quality: "auto:good" }, // Auto optimize quality
+      { fetch_format: "auto" }, // Convert to webp if supported
+      { flags: "progressive" }, // Progressive loading for JPEGs
     ],
   },
 });
@@ -28,10 +30,10 @@ const messageImageStorage = new CloudinaryStorage({
 // Conditional middleware for message image upload
 const uploadMessageImage = multer({ storage: messageImageStorage });
 export const uploadMessageImageOptional = (req, res, next) => {
-  const contentType = req.get('Content-Type');
+  const contentType = req.get("Content-Type");
 
   // Only user multer if message have an image
-  if(contentType && contentType.includes('multipart/form-data')) {
+  if (contentType && contentType.includes("multipart/form-data")) {
     uploadMessageImage.single("image")(req, res, next);
   } else {
     next();

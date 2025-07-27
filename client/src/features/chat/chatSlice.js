@@ -18,7 +18,6 @@ export const chatSlice = createSlice({
     },
     setOnlineUsers: (state, action) => {
       state.onlineUsers = action.payload;
-      console.log("Online users updated in state:", state.onlineUsers);
     },
   },
 });

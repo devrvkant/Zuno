@@ -2,6 +2,11 @@
 const userSocketMap = new Map(); // userId -> socketId mapping
 
 const userHandler = (socket, io) => {
+  // 1. Messaging functionality --->
+  // for one to one messaging
+  socket.join(socket.userId); // Join the room named after the user's ID
+
+  // 2. Online status management --->
   // when a client connects simply that is online
   userSocketMap.set(socket.userId, socket.id);
 
@@ -13,6 +18,9 @@ const userHandler = (socket, io) => {
     // on disconnect, remove the user from the map(make offline)
     userSocketMap.delete(socket.userId);
     io.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
+
+    // on disconnect, leave the room
+    socket.leave(socket.userId);
   };
 
   return { cleanup };

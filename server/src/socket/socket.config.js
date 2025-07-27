@@ -30,4 +30,6 @@ export const configureSocket = (server) => {
       userHandlerInstance.cleanup();
     });
   });
+
+  return io;
 };

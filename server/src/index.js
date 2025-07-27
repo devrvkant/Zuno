@@ -16,7 +16,8 @@ const app = express();
 const server = createServer(app);
 
 // configure socket.io on the server
-configureSocket(server);
+const io = configureSocket(server);
+export { io };
 
 // using middlewares
 app.use(express.json()); // allow us to parse incoming requests :- req.body
