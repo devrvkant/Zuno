@@ -6,13 +6,13 @@ const userHandler = (socket, io) => {
   userSocketMap.set(socket.userId, socket.id);
 
   // Notify other users that this user is online (send userIds)
-  socket.broadcast.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
+  io.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
 
   // Cleanup function to handle disconnections(user goes offline) :- called by centralized disconnect handler
   const cleanup = () => {
     // on disconnect, remove the user from the map(make offline)
     userSocketMap.delete(socket.userId);
-    socket.broadcast.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
+    io.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
   };
 
   return { cleanup };

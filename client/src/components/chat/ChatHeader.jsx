@@ -27,7 +27,7 @@ const ChatHeader = () => {
       </div>
       <div>
         <h2 className="font-semibold text-foreground">{selectedUser.name}</h2>
-        <p className="text-xs text-muted-foreground">
+        <p className={`text-xs ${isOnline ? "text-green-500" : "text-muted-foreground"}`}>
           {isOnline ? "Online" : "Offline"}
         </p>
       </div>
