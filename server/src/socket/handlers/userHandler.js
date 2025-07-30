@@ -13,6 +13,11 @@ const userHandler = (socket, io) => {
   // Notify other users that this user is online (send userIds)
   io.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
 
+  // 3. handle typing events
+  socket.on("typing", ({ isTyping, userId }) => {
+    socket.to(userId).emit("typing", { isTyping, userId: socket.userId });
+  });
+
   // Cleanup function to handle disconnections(user goes offline) :- called by centralized disconnect handler
   const cleanup = () => {
     // on disconnect, remove the user from the map(make offline)

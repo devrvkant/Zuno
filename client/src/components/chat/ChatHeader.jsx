@@ -2,8 +2,11 @@ import { useSelector } from "react-redux";
 import { User } from "lucide-react";
 
 const ChatHeader = () => {
-  const { selectedUser, onlineUsers } = useSelector((state) => state.chat);
+  const { selectedUser, onlineUsers, typingUsers } = useSelector(
+    (state) => state.chat
+  );
   const isOnline = onlineUsers.includes(selectedUser?._id);
+  const isTyping = typingUsers.includes(selectedUser?._id);
 
   if (!selectedUser) return null;
 
@@ -27,8 +30,12 @@ const ChatHeader = () => {
       </div>
       <div>
         <h2 className="font-semibold text-foreground">{selectedUser.name}</h2>
-        <p className={`text-xs ${isOnline ? "text-green-500" : "text-muted-foreground"}`}>
-          {isOnline ? "Online" : "Offline"}
+        <p
+          className={`text-xs ${
+            isOnline ? "text-green-500" : "text-muted-foreground"
+          }`}
+        >
+          {isTyping ? "Typing..." : isOnline ? "Online" : "Offline"}
         </p>
       </div>
     </div>

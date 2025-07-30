@@ -4,6 +4,7 @@ const initialState = {
   users: [],
   onlineUsers: [],
   selectedUser: null,
+  typingUsers: [],
 };
 
 export const chatSlice = createSlice({
@@ -19,13 +20,20 @@ export const chatSlice = createSlice({
     setOnlineUsers: (state, action) => {
       state.onlineUsers = action.payload;
     },
+    setTyping: (state, action) => {
+      const { isTyping, userId } = action.payload;
+      if (isTyping) {
+        if (!state.typingUsers.includes(userId)) {
+          state.typingUsers.push(userId);
+        }
+      } else {
+        state.typingUsers = state.typingUsers.filter((id) => id !== userId);
+      }
+    },
   },
 });
 
-export const {
-  setUsers,
-  setSelectedUser,
-  setOnlineUsers,
-} = chatSlice.actions;
+export const { setUsers, setSelectedUser, setOnlineUsers, setTyping } =
+  chatSlice.actions;
 
 export default chatSlice.reducer;

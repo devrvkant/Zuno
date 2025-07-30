@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SendHorizonal, Image as ImageIcon, X } from "lucide-react";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
@@ -8,8 +8,11 @@ import { Input } from "../ui/input";
 import { useSendMessageMutation } from "../../features/chat/chatApi";
 import { useFileUpload } from "../../hooks/use-file-upload";
 import decideMsgType from "../../utils/decideMsgType";
+import socket from "../../socket/socket";
 
 const MessageInput = () => {
+  const timeoutRef = useRef(null);
+  const [isTyping, setIsTyping] = useState(false);
   const [message, setMessage] = useState("");
   const { selectedUser } = useSelector((state) => state.chat);
   const [sendMessage, { isLoading }] = useSendMessageMutation();
@@ -62,6 +65,21 @@ const MessageInput = () => {
     }
   }, [errors]);
 
+  const handleMsgTyping = (e) => {
+    setMessage(e.target.value);
+
+    setIsTyping(true);
+    socket.emit("typing", { isTyping: true, userId: selectedUser._id });
+
+    // clear previous timer
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => {
+      setIsTyping(false);
+      socket.emit("typing", { isTyping: false, userId: selectedUser._id });
+    }, 500);
+  };
+
   return (
     <div className="p-2 sm:p-3">
       {/* Image Preview */}
@@ -103,7 +121,7 @@ const MessageInput = () => {
             type="text"
             placeholder="Message..."
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={handleMsgTyping}
             className="h-11 bg-muted border-none focus-visible:ring-0 focus-visible:ring-offset-0 pl-12 pr-4 text-base"
             autoComplete="off"
           />
