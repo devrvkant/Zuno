@@ -23,12 +23,14 @@ export { io };
 app.use(express.json()); // allow us to parse incoming requests :- req.body
 app.use(
   cors({
-    // origin: "http://localhost:5173",   // specify the exact frontend origin
-    origin: [
-      "http://localhost:5173", // for local development
-      "http://192.168.1.23:5173", // for mobile testing
-    ],
-    credentials: true, // allow credentials (cookies, authorization headers)
+    origin:
+      config.nodeEnv === "production"
+        ? ["https://brave-wave-05bb48f00.2.azurestaticapps.net"]
+        : [
+            "http://localhost:5173",
+            "https://brave-wave-05bb48f00.2.azurestaticapps.net",
+          ],
+    credentials: true,
   })
 ); // prevent from CORS errors(allow cross origin access)
 app.use(cookieParser()); // allow us to parse incoming cookies
