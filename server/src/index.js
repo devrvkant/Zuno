@@ -36,6 +36,9 @@ app.use(
 app.use(cookieParser()); // allow us to parse incoming cookies
 
 // using routes
+app.get("/", (req, res) => {
+  res.send("Welcome to Zuno Server!");
+});
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/messages", messageRouter);
