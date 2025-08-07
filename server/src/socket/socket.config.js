@@ -2,15 +2,13 @@ import { Server } from "socket.io";
 
 import userHandler from "./handlers/userHandler.js";
 import { socketAuthMiddleware } from "./socketAuthMiddleware.js";
+import { config } from "../config/env.js";
 
 
 export const configureSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: [
-        "http://localhost:5173", // for local development
-        "http://192.168.1.23:5173", // for mobile testing
-      ],
+      origin: config.nodeEnv === "production" ? config.serverUrl : "http://localhost:5173",
       credentials: true,
     },
   });
