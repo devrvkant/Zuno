@@ -8,7 +8,7 @@ import { config } from "../config/env.js";
 export const configureSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: config.nodeEnv === "production" ? config.serverUrl : "http://localhost:5173",
+      origin: config.nodeEnv === "production" ? config.clientUrl : "http://localhost:5173",
       credentials: true,
     },
   });
