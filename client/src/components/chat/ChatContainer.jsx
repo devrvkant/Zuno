@@ -4,8 +4,8 @@ import { MessageCircle } from "lucide-react";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MsgInput";
 import MessagesSkeleton from "./MessagesSkeleton";
-import MessageList from "./MessageList"; // Import the new component
 import { useGetMessagesQuery } from "../../features/chat/chatApi";
+import MessageList from "./MessageList";
 
 const ChatContainer = () => {
   const { selectedUser } = useSelector((state) => state.chat);
