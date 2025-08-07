@@ -10,6 +10,7 @@ export const config = {
     senderEmail: process.env.SENDER_EMAIL,
     nodeEnv: process.env.NODE_ENV,
     clientUrl: process.env.CLIENT_URL,
+    serverUrl: process.env.SERVER_URL,
     cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
     cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
     cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
