@@ -4,25 +4,241 @@ export const VERIFICATION_EMAIL_TEMPLATE = `
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verify Your Email</title>
+  <title>Verify Your Email - Zuno</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: oklch(0.985 0 0);
+      background-color: oklch(0.141 0.005 285.823);
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: oklch(0.21 0.006 285.885);
+      border-radius: 0.625rem;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      border: 1px solid oklch(1 0 0 / 10%);
+    }
+    
+    .header {
+      background: linear-gradient(135deg, oklch(0.488 0.243 264.376), oklch(0.29 0.012 265));
+      padding: 40px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, oklch(0.488 0.243 264.376) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, oklch(0.29 0.012 265) 0%, transparent 50%);
+      opacity: 0.3;
+    }
+    
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .header-subtitle {
+      font-size: 16px;
+      opacity: 0.9;
+      font-weight: 300;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .content {
+      padding: 40px 30px;
+      background-color: oklch(0.21 0.006 285.885);
+    }
+    
+    .greeting {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: oklch(0.985 0 0);
+    }
+    
+    .message {
+      font-size: 16px;
+      color: oklch(0.705 0.015 286.067);
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+    
+    .verification-section {
+      background: linear-gradient(135deg, oklch(0.274 0.006 286.033), oklch(0.21 0.006 285.885));
+      border-radius: 0.625rem;
+      padding: 30px;
+      margin: 30px 0;
+      text-align: center;
+      border: 1px solid oklch(1 0 0 / 10%);
+    }
+    
+    .verification-label {
+      font-size: 14px;
+      color: oklch(0.705 0.015 286.067);
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .verification-code {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: 8px;
+      color: oklch(0.92 0.004 286.32);
+      background: linear-gradient(135deg, oklch(0.488 0.243 264.376), oklch(0.29 0.012 265));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px oklch(0.488 0.243 264.376 / 30%);
+      margin: 10px 0;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    }
+    
+    .expiry-notice {
+      background-color: oklch(0.274 0.006 286.033);
+      border-radius: 0.625rem;
+      padding: 20px;
+      margin: 25px 0;
+      border-left: 4px solid oklch(0.488 0.243 264.376);
+    }
+    
+    .expiry-notice .icon {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+    
+    .security-note {
+      font-size: 14px;
+      color: oklch(0.705 0.015 286.067);
+      margin-top: 25px;
+      padding: 15px;
+      background-color: oklch(0.274 0.006 286.033);
+      border-radius: 0.625rem;
+    }
+    
+    .footer {
+      background-color: oklch(0.274 0.006 286.033);
+      padding: 25px 30px;
+      text-align: center;
+      border-top: 1px solid oklch(1 0 0 / 10%);
+    }
+    
+    .footer-text {
+      font-size: 14px;
+      color: oklch(0.705 0.015 286.067);
+    }
+    
+    .brand-signature {
+      margin-top: 20px;
+      font-weight: 600;
+      color: oklch(0.985 0 0);
+    }
+    
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+      
+      .email-container {
+        border-radius: 0;
+        margin: 0;
+      }
+      
+      .header, .content, .footer {
+        padding: 25px 20px;
+      }
+      
+      .logo {
+        font-size: 24px;
+      }
+      
+      .verification-code {
+        font-size: 28px;
+        letter-spacing: 6px;
+      }
+      
+      .verification-section {
+        padding: 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .verification-code {
+        font-size: 24px;
+        letter-spacing: 4px;
+      }
+    }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(to right, #4CAF50, #45a049); padding: 20px; text-align: center;">
-    <h1 style="color: white; margin: 0;">Verify Your Email</h1>
-  </div>
-  <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <p>Hello,</p>
-    <p>Thank you for signing up! Your verification code is:</p>
-    <div style="text-align: center; margin: 30px 0;">
-      <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #4CAF50;">{verificationCode}</span>
+<body>
+  <div class="email-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">Zuno</div>
+      <div class="header-subtitle">Secure Email Verification</div>
     </div>
-    <p>Enter this code on the verification page to complete your registration.</p>
-    <p>This code will expire in 15 minutes for security reasons.</p>
-    <p>If you didn't create an account with us, please ignore this email.</p>
-    <p>Best regards,<br>Your App Team</p>
-  </div>
-  <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
-    <p>This is an automated message, please do not reply to this email.</p>
+    
+    <!-- Main Content -->
+    <div class="content">
+      <p class="greeting">Hello there!</p>
+      
+      <p class="message">
+        Thank you for signing up for Zuno! To complete your account setup and ensure the security of your account, 
+        please verify your email address using the verification code below.
+      </p>
+      
+      <div class="verification-section">
+        <div class="verification-label">Your Verification Code</div>
+        <div class="verification-code">{verificationCode}</div>
+      </div>
+      
+      <div class="expiry-notice">
+        <span class="icon">⏰</span>
+        <strong>Important:</strong> This verification code will expire in 15 minutes for security reasons.
+      </div>
+      
+      <p class="message">
+        Simply enter this code on the verification page to complete your registration and start using Zuno.
+      </p>
+      
+      <div class="security-note">
+        <strong>Security Notice:</strong> If you didn't create an account with Zuno, please ignore this email. 
+        Your email address will not be added to our system without verification.
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p class="footer-text">
+        This is an automated security message. Please do not reply to this email.
+      </p>
+      <div class="brand-signature">
+        The Zuno Team
+      </div>
+    </div>
   </div>
 </body>
 </html>
@@ -45,71 +261,93 @@ export const WELCOME_EMAIL_TEMPLATE = `
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            color: #333333;
-            background-color: #f8fafc;
+            color: oklch(0.985 0 0);
+            background-color: oklch(0.141 0.005 285.823);
+            margin: 0;
+            padding: 20px;
         }
         
         .email-container {
             max-width: 600px;
             margin: 0 auto;
-            background-color: #ffffff;
-            border-radius: 12px;
+            background-color: oklch(0.21 0.006 285.885);
+            border-radius: 0.625rem;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid oklch(1 0 0 / 10%);
         }
         
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, oklch(0.488 0.243 264.376), oklch(0.29 0.012 265));
             padding: 40px 30px;
             text-align: center;
-            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 40%, oklch(0.488 0.243 264.376) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, oklch(0.29 0.012 265) 0%, transparent 50%);
+            opacity: 0.4;
         }
         
         .logo {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
         }
         
         .header-subtitle {
-            font-size: 16px;
+            font-size: 18px;
             opacity: 0.9;
             font-weight: 300;
+            position: relative;
+            z-index: 1;
         }
         
         .content {
             padding: 40px 30px;
+            background-color: oklch(0.21 0.006 285.885);
         }
         
         .welcome-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 600;
-            color: #1a202c;
+            color: oklch(0.985 0 0);
             margin-bottom: 20px;
             text-align: center;
         }
         
         .welcome-message {
             font-size: 16px;
-            color: #4a5568;
+            color: oklch(0.705 0.015 286.067);
             margin-bottom: 30px;
             text-align: center;
             line-height: 1.8;
         }
         
         .features {
-            background-color: #f7fafc;
-            border-radius: 8px;
-            padding: 25px;
+            background: linear-gradient(135deg, oklch(0.274 0.006 286.033), oklch(0.21 0.006 285.885));
+            border-radius: 0.625rem;
+            padding: 30px;
             margin: 30px 0;
+            border: 1px solid oklch(1 0 0 / 10%);
         }
         
         .features-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 15px;
+            color: oklch(0.985 0 0);
+            margin-bottom: 20px;
             text-align: center;
         }
         
@@ -120,21 +358,22 @@ export const WELCOME_EMAIL_TEMPLATE = `
         .feature-item {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
-            font-size: 14px;
-            color: #4a5568;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: oklch(0.705 0.015 286.067);
         }
         
         .feature-icon {
-            width: 20px;
-            height: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, oklch(0.488 0.243 264.376), oklch(0.29 0.012 265));
             border-radius: 50%;
-            margin-right: 12px;
+            margin-right: 15px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 0 10px oklch(0.488 0.243 264.376 / 30%);
         }
         
         .feature-icon::after {
@@ -146,89 +385,100 @@ export const WELCOME_EMAIL_TEMPLATE = `
         
         .cta-section {
             text-align: center;
-            margin: 30px 0;
+            margin: 40px 0;
         }
         
         .cta-button {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, oklch(0.488 0.243 264.376), oklch(0.29 0.012 265));
+            color: oklch(0.985 0 0);
             text-decoration: none;
-            padding: 14px 30px;
-            border-radius: 8px;
+            padding: 16px 32px;
+            border-radius: 0.625rem;
             font-weight: 600;
             font-size: 16px;
-            transition: transform 0.2s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px oklch(0.488 0.243 264.376 / 30%);
+            border: 1px solid oklch(1 0 0 / 10%);
         }
         
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-        
-        .footer {
-            background-color: #f7fafc;
-            padding: 30px;
-            text-align: center;
-            border-top: 1px solid #e2e8f0;
-        }
-        
-        .footer-text {
-            font-size: 14px;
-            color: #718096;
-            margin-bottom: 20px;
-        }
-        
-        .social-links {
-            margin-bottom: 20px;
-        }
-        
-        .social-link {
-            display: inline-block;
-            margin: 0 10px;
-            color: #a0aec0;
-            text-decoration: none;
-            font-size: 12px;
-        }
-        
-        .unsubscribe {
-            margin-top: 20px;
-        }
-        
-        .unsubscribe-link {
-            color: #a0aec0;
-            text-decoration: none;
-            font-size: 12px;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s ease;
-        }
-        
-        .unsubscribe-link:hover {
-            border-bottom-color: #a0aec0;
+            box-shadow: 0 8px 25px oklch(0.488 0.243 264.376 / 40%);
         }
         
         .divider {
             height: 1px;
-            background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+            background: linear-gradient(90deg, transparent, oklch(1 0 0 / 10%), transparent);
             margin: 30px 0;
         }
         
+        .closing-message {
+            background-color: oklch(0.274 0.006 286.033);
+            border-radius: 0.625rem;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid oklch(0.488 0.243 264.376);
+        }
+        
+        .footer {
+            background-color: oklch(0.274 0.006 286.033);
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid oklch(1 0 0 / 10%);
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            color: oklch(0.705 0.015 286.067);
+            margin-bottom: 15px;
+        }
+        
+        .brand-signature {
+            margin-top: 20px;
+            font-weight: 600;
+            color: oklch(0.985 0 0);
+            font-size: 16px;
+        }
+        
         @media (max-width: 640px) {
+            body {
+                padding: 10px;
+            }
+            
             .email-container {
-                margin: 0;
                 border-radius: 0;
+                margin: 0;
             }
             
             .header, .content, .footer {
                 padding: 25px 20px;
             }
             
+            .logo {
+                font-size: 24px;
+            }
+            
+            .welcome-title {
+                font-size: 22px;
+            }
+            
+            .cta-button {
+                padding: 14px 28px;
+                font-size: 14px;
+            }
+            
+            .features {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
             .welcome-title {
                 font-size: 20px;
             }
             
-            .cta-button {
-                padding: 12px 25px;
+            .feature-item {
                 font-size: 14px;
             }
         }
@@ -260,6 +510,10 @@ export const WELCOME_EMAIL_TEMPLATE = `
                     </li>
                     <li class="feature-item">
                         <div class="feature-icon"></div>
+                        <span>Connect with others and discover amazing features</span>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon"></div>
                         <span>Need help? Reach out to us at <strong>{{SUPPORT_EMAIL}}</strong></span>
                     </li>
                 </ul>
@@ -271,15 +525,17 @@ export const WELCOME_EMAIL_TEMPLATE = `
             
             <div class="divider"></div>
             
-            <p class="welcome-message">
-                If you have any questions or need help getting started, don't hesitate to reach out to our support team. 
-                We're here to make your experience with {{COMPANY_NAME}} as smooth and enjoyable as possible.
-            </p>
-            
-            <p class="welcome-message">
-                <strong>Best regards,</strong><br>
-                The {{COMPANY_NAME}} Team
-            </p>
+            <div class="closing-message">
+                <p class="welcome-message">
+                    If you have any questions or need help getting started, don't hesitate to reach out to our support team. 
+                    We're here to make your experience with {{COMPANY_NAME}} as smooth and enjoyable as possible.
+                </p>
+                
+                <p class="welcome-message">
+                    <strong>Best regards,</strong><br>
+                    The {{COMPANY_NAME}} Team
+                </p>
+            </div>
         </div>
         
         <!-- Footer -->
@@ -288,8 +544,8 @@ export const WELCOME_EMAIL_TEMPLATE = `
                 You're receiving this email because you recently created an account with {{COMPANY_NAME}}.
             </p>
             
-            <div class="unsubscribe">
-                <a href="{{UNSUBSCRIBE_URL}}" class="unsubscribe-link">Unsubscribe from these emails</a>
+            <div class="brand-signature">
+                The {{COMPANY_NAME}} Team
             </div>
         </div>
     </div>
@@ -303,32 +559,280 @@ export const PASSWORD_RESET_SUCCESS_TEMPLATE = `
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Password Reset Successful</title>
+  <title>Password Reset Successful - Zuno</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: oklch(0.985 0 0);
+      background-color: oklch(0.141 0.005 285.823);
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: oklch(0.21 0.006 285.885);
+      border-radius: 0.625rem;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      border: 1px solid oklch(1 0 0 / 10%);
+    }
+    
+    .header {
+      background: linear-gradient(135deg, oklch(0.488 0.243 264.376), oklch(0.29 0.012 265));
+      padding: 40px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, oklch(0.488 0.243 264.376) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, oklch(0.29 0.012 265) 0%, transparent 50%);
+      opacity: 0.3;
+    }
+    
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .header-subtitle {
+      font-size: 16px;
+      opacity: 0.9;
+      font-weight: 300;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .content {
+      padding: 40px 30px;
+      background-color: oklch(0.21 0.006 285.885);
+    }
+    
+    .greeting {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: oklch(0.985 0 0);
+    }
+    
+    .message {
+      font-size: 16px;
+      color: oklch(0.705 0.015 286.067);
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+    
+    .success-section {
+      background: linear-gradient(135deg, oklch(0.26 0.013 105), oklch(0.21 0.006 285.885));
+      border-radius: 0.625rem;
+      padding: 30px;
+      margin: 30px 0;
+      text-align: center;
+      border: 1px solid oklch(1 0 0 / 10%);
+    }
+    
+    .success-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, oklch(0.26 0.013 105), oklch(0.488 0.243 264.376));
+      color: oklch(0.985 0 0);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 20px oklch(0.26 0.013 105 / 30%);
+    }
+    
+    .success-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: oklch(0.985 0 0);
+      margin-bottom: 10px;
+    }
+    
+    .success-message {
+      color: oklch(0.705 0.015 286.067);
+      font-size: 16px;
+    }
+    
+    .security-tips {
+      background-color: oklch(0.274 0.006 286.033);
+      border-radius: 0.625rem;
+      padding: 25px;
+      margin: 25px 0;
+      border-left: 4px solid oklch(0.488 0.243 264.376);
+    }
+    
+    .security-tips h3 {
+      color: oklch(0.985 0 0);
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    
+    .security-tips ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .security-tips li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      color: oklch(0.705 0.015 286.067);
+    }
+    
+    .security-tips li::before {
+      content: "🔒";
+      margin-right: 10px;
+      font-size: 14px;
+    }
+    
+    .warning-notice {
+      background-color: oklch(0.704 0.191 22.216 / 10%);
+      border: 1px solid oklch(0.704 0.191 22.216 / 30%);
+      border-radius: 0.625rem;
+      padding: 20px;
+      margin: 25px 0;
+    }
+    
+    .warning-notice .icon {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+    
+    .footer {
+      background-color: oklch(0.274 0.006 286.033);
+      padding: 25px 30px;
+      text-align: center;
+      border-top: 1px solid oklch(1 0 0 / 10%);
+    }
+    
+    .footer-text {
+      font-size: 14px;
+      color: oklch(0.705 0.015 286.067);
+    }
+    
+    .brand-signature {
+      margin-top: 20px;
+      font-weight: 600;
+      color: oklch(0.985 0 0);
+    }
+    
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+      
+      .email-container {
+        border-radius: 0;
+        margin: 0;
+      }
+      
+      .header, .content, .footer {
+        padding: 25px 20px;
+      }
+      
+      .logo {
+        font-size: 24px;
+      }
+      
+      .success-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+      }
+      
+      .success-title {
+        font-size: 20px;
+      }
+      
+      .security-tips {
+        padding: 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .success-section {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(to right, #4CAF50, #45a049); padding: 20px; text-align: center;">
-    <h1 style="color: white; margin: 0;">Password Reset Successful</h1>
-  </div>
-  <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <p>Hello,</p>
-    <p>We're writing to confirm that your password has been successfully reset.</p>
-    <div style="text-align: center; margin: 30px 0;">
-      <div style="background-color: #4CAF50; color: white; width: 50px; height: 50px; line-height: 50px; border-radius: 50%; display: inline-block; font-size: 30px;">
-        ✓
+<body>
+  <div class="email-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">Zuno</div>
+      <div class="header-subtitle">Security Confirmation</div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="content">
+      <p class="greeting">Hello there!</p>
+      
+      <p class="message">
+        We're writing to confirm that your password has been successfully reset for your Zuno account.
+      </p>
+      
+      <div class="success-section">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Password Reset Complete</div>
+        <div class="success-message">
+          Your account is now secured with your new password.
+        </div>
+      </div>
+      
+      <div class="warning-notice">
+        <span class="icon">⚠️</span>
+        <strong>Important:</strong> If you did not initiate this password reset, please contact our support team immediately.
+      </div>
+      
+      <div class="security-tips">
+        <h3>Security Recommendations</h3>
+        <ul>
+          <li>Use a strong, unique password that you haven't used elsewhere</li>
+          <li>Enable two-factor authentication if available</li>
+          <li>Avoid using the same password across multiple sites</li>
+          <li>Consider using a password manager for better security</li>
+        </ul>
+      </div>
+      
+      <p class="message">
+        Thank you for helping us keep your Zuno account secure. If you have any questions or concerns, 
+        don't hesitate to reach out to our support team.
+      </p>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p class="footer-text">
+        This is an automated security message. Please do not reply to this email.
+      </p>
+      <div class="brand-signature">
+        The Zuno Team
       </div>
     </div>
-    <p>If you did not initiate this password reset, please contact our support team immediately.</p>
-    <p>For security reasons, we recommend that you:</p>
-    <ul>
-      <li>Use a strong, unique password</li>
-      <li>Enable two-factor authentication if available</li>
-      <li>Avoid using the same password across multiple sites</li>
-    </ul>
-    <p>Thank you for helping us keep your account secure.</p>
-    <p>Best regards,<br>Your App Team</p>
-  </div>
-  <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
-    <p>This is an automated message, please do not reply to this email.</p>
   </div>
 </body>
 </html>
@@ -340,24 +844,287 @@ export const PASSWORD_RESET_REQUEST_TEMPLATE = `
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reset Your Password</title>
+  <title>Reset Your Password - Zuno</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: oklch(0.985 0 0);
+      background-color: oklch(0.141 0.005 285.823);
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: oklch(0.21 0.006 285.885);
+      border-radius: 0.625rem;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      border: 1px solid oklch(1 0 0 / 10%);
+    }
+    
+    .header {
+      background: linear-gradient(135deg, oklch(0.488 0.243 264.376), oklch(0.29 0.012 265));
+      padding: 40px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, oklch(0.488 0.243 264.376) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, oklch(0.29 0.012 265) 0%, transparent 50%);
+      opacity: 0.3;
+    }
+    
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .header-subtitle {
+      font-size: 16px;
+      opacity: 0.9;
+      font-weight: 300;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .content {
+      padding: 40px 30px;
+      background-color: oklch(0.21 0.006 285.885);
+    }
+    
+    .greeting {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: oklch(0.985 0 0);
+    }
+    
+    .message {
+      font-size: 16px;
+      color: oklch(0.705 0.015 286.067);
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+    
+    .reset-section {
+      background: linear-gradient(135deg, oklch(0.274 0.006 286.033), oklch(0.21 0.006 285.885));
+      border-radius: 0.625rem;
+      padding: 30px;
+      margin: 30px 0;
+      text-align: center;
+      border: 1px solid oklch(1 0 0 / 10%);
+    }
+    
+    .reset-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, oklch(0.488 0.243 264.376), oklch(0.29 0.012 265));
+      color: oklch(0.985 0 0);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 20px oklch(0.488 0.243 264.376 / 30%);
+    }
+    
+    .reset-button {
+      display: inline-block;
+      background: linear-gradient(135deg, oklch(0.488 0.243 264.376), oklch(0.29 0.012 265));
+      color: oklch(0.985 0 0);
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 0.625rem;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px oklch(0.488 0.243 264.376 / 30%);
+      border: 1px solid oklch(1 0 0 / 10%);
+      margin: 10px 0;
+    }
+    
+    .reset-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px oklch(0.488 0.243 264.376 / 40%);
+    }
+    
+    .expiry-notice {
+      background-color: oklch(0.274 0.006 286.033);
+      border-radius: 0.625rem;
+      padding: 20px;
+      margin: 25px 0;
+      border-left: 4px solid oklch(0.704 0.191 22.216);
+    }
+    
+    .expiry-notice .icon {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+    
+    .alternative-section {
+      background-color: oklch(0.274 0.006 286.033);
+      border-radius: 0.625rem;
+      padding: 20px;
+      margin: 25px 0;
+      border: 1px solid oklch(1 0 0 / 10%);
+    }
+    
+    .alternative-section h3 {
+      color: oklch(0.985 0 0);
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    
+    .alternative-section p {
+      color: oklch(0.705 0.015 286.067);
+      font-size: 14px;
+      word-break: break-all;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      background-color: oklch(0.21 0.006 285.885);
+      padding: 10px;
+      border-radius: 0.325rem;
+      border: 1px solid oklch(1 0 0 / 10%);
+    }
+    
+    .security-note {
+      background-color: oklch(0.274 0.006 286.033);
+      border-radius: 0.625rem;
+      padding: 20px;
+      margin: 25px 0;
+      border-left: 4px solid oklch(0.488 0.243 264.376);
+    }
+    
+    .footer {
+      background-color: oklch(0.274 0.006 286.033);
+      padding: 25px 30px;
+      text-align: center;
+      border-top: 1px solid oklch(1 0 0 / 10%);
+    }
+    
+    .footer-text {
+      font-size: 14px;
+      color: oklch(0.705 0.015 286.067);
+    }
+    
+    .brand-signature {
+      margin-top: 20px;
+      font-weight: 600;
+      color: oklch(0.985 0 0);
+    }
+    
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+      
+      .email-container {
+        border-radius: 0;
+        margin: 0;
+      }
+      
+      .header, .content, .footer {
+        padding: 25px 20px;
+      }
+      
+      .logo {
+        font-size: 24px;
+      }
+      
+      .reset-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+      }
+      
+      .reset-button {
+        padding: 14px 28px;
+        font-size: 14px;
+      }
+      
+      .reset-section {
+        padding: 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .reset-section {
+        padding: 15px;
+      }
+    }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(to right, #4CAF50, #45a049); padding: 20px; text-align: center;">
-    <h1 style="color: white; margin: 0;">Password Reset</h1>
-  </div>
-  <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <p>Hello,</p>
-    <p>We received a request to reset your password. If you didn't make this request, please ignore this email.</p>
-    <p>To reset your password, click the button below:</p>
-    <div style="text-align: center; margin: 30px 0;">
-      <a href="{resetURL}" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
+<body>
+  <div class="email-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">Zuno</div>
+      <div class="header-subtitle">Password Reset Request</div>
     </div>
-    <p>This link will expire in 1 hour for security reasons.</p>
-    <p>Best regards,<br>Your App Team</p>
-  </div>
-  <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
-    <p>This is an automated message, please do not reply to this email.</p>
+    
+    <!-- Main Content -->
+    <div class="content">
+      <p class="greeting">Hello there!</p>
+      
+      <p class="message">
+        We received a request to reset your password for your Zuno account. If you didn't make this request, 
+        you can safely ignore this email and your password will remain unchanged.
+      </p>
+      
+      <div class="reset-section">
+        <div class="reset-icon">🔑</div>
+        <p class="message">
+          To reset your password, click the button below:
+        </p>
+        <a href="{resetURL}" class="reset-button">Reset My Password</a>
+      </div>
+      
+      <div class="expiry-notice">
+        <span class="icon">⏰</span>
+        <strong>Important:</strong> This password reset link will expire in 1 hour for security reasons.
+      </div>
+      
+      <div class="alternative-section">
+        <h3>Having trouble with the button?</h3>
+        <p>Copy and paste this link into your browser:</p>
+        <p>{resetURL}</p>
+      </div>
+      
+      <div class="security-note">
+        <strong>Security Note:</strong> If you believe your account has been compromised or if you continue 
+        to receive unwanted password reset emails, please contact our support team immediately.
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p class="footer-text">
+        This is an automated security message. Please do not reply to this email.
+      </p>
+      <div class="brand-signature">
+        The Zuno Team
+      </div>
+    </div>
   </div>
 </body>
 </html>

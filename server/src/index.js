@@ -25,10 +25,10 @@ app.use(
   cors({
     origin:
       config.nodeEnv === "production"
-        ? ["https://brave-wave-05bb48f00.2.azurestaticapps.net"]
+        ? ["https://zuno.jangir.me"]
         : [
             "http://localhost:5173",
-            "https://brave-wave-05bb48f00.2.azurestaticapps.net",
+            "https://zuno.jangir.me",
           ],
     credentials: true,
   })

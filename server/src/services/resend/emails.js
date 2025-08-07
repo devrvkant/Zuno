@@ -33,11 +33,11 @@ export const sendWelcomeEmail = async (email, name) => {
   const recipient = [email];
   const personalizedWelcomeEmail = WELCOME_EMAIL_TEMPLATE.replace(
     /{{COMPANY_NAME}}/g,
-    "riki.tech"
+    "Zuno"
   )
     .replace(/{{USER_NAME}}/g, name || "there")
     // provide the real app url here later
-    .replace(/{{APP_URL}}/g, "jangir.me")
+    .replace(/{{APP_URL}}/g, "https://zuno.jangir.me")
     .replace(/{{SUPPORT_EMAIL}}/g, "rikijangir99@gmail.com")
     .replace(/{{UNSUBSCRIBE_URL}}/g, "provide the url");
 
